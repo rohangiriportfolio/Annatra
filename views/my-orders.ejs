@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Orders</title>
+  <link rel="icon" type="image/png" href="/image/favicon.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Merienda&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/vendor-dashboard.css">
+</head>
+
+<body>
+  <%- include('partial/sidebar') %>
+    <%- include('partial/header') %>
+      <main class="container">
+        <div class="d-flex" style="flex-direction: column; padding: 0rem 1.5rem 1.5rem 1.5rem !important;">
+          <h4 id="order-title">My Orders</h4>
+          <div class="flex-grow-1" id="content">
+            <div class="order-list">
+
+
+              <% if (orders.length===0) { %>
+                <div class="alert alert-danger">
+                  No Order History !!!
+                </div>
+                <% } else { %>
+                  <% orders.forEach((order, index)=> { %>
+                    <div class="card order-card mb-3">
+                      <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                          <h6 class="text-muted mb-1">
+                            ORDER ID:
+                            <%= order.orderId %>
+                              <% if (order.orderCompleted) { %>
+                                <span class="badge bg-success ms-2">Approved</span>
+                                <% } else { %>
+                                  <span class="badge bg-warning ms-2">Pending</span>
+                                  <% } %>
+                          </h6>
+                          <p class="mb-0"><i class="fa-solid fa-store"></i> Dealer: <%= order.dealer %>
+                          </p>
+                          <% if(order.orderCompleted && dealerApprovalDates[order.orderId]) { %>
+                            <span>Approved On: <%= new Date(dealerApprovalDates[order.orderId]).toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', year: 'numeric', month: 'short', day: 'numeric' }) %>
+                            </span> <br>
+                            <% } %>
+                            <span>Phone: <%= user.dealerPhone %></span>
+                        </div>
+                        <div class="text-end">
+                          <span>
+                            <% if (order.orderCompleted && otherMembersMap[order.orderId] &&
+                              otherMembersMap[order.orderId].length> 0) { %>
+                              <button class="btn btn-sm toggle-members btn-outline-primary"
+                                data-target="#members<%= index %>">
+                                <i class="fa-solid fa-eye"></i> Member Order
+                              </button>
+                              <% } %>
+                                <button class="btn btn-sm toggle-details btn-primary"
+                                  data-target="#details<%= index %>">
+                                  <i class="fa-solid fa-eye"></i> My Order
+                                </button>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div id="details<%= index %>" class="order-details p-3 bg-light" style="display: none;">
+                        <h6 class="fw-bold">My Ordered Items:</h6>
+                        <div class="member-card border rounded">
+
+                          <!-- Added order updated date display for your own order below -->
+                          <small>Ordered On: <%= order.orderUpdatedAt ? new Date(order.orderUpdatedAt).toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A' %></small>
+                          <ul class="order-members list-group">
+                            <% order.items.forEach(item=> { %>
+                              <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <%= item.item %> Quantity: <%= item.quantity %> Pcs
+                                    <span class="fw-bold">₹ <%= item.price %></span>
+                              </li>
+                              <% }) %>
+                          </ul>
+                          <div class="mt-2"><strong>Total Amount: ₹ <%= order.total %></strong></div>
+                        </div>
+                      </div>
+
+
+                      <% if (order.orderCompleted && otherMembersMap[order.orderId] &&
+                        otherMembersMap[order.orderId].length> 0) { %>
+                        <div id="members<%= index %>" class="order-members p-3 bg-light" style="display: none;">
+                          <h6 class="fw-bold">Other Members' Orders:</h6>
+                          <% otherMembersMap[order.orderId].forEach(member=> { %>
+                            <div class="member-card mb-3 border rounded">
+                              <div class="d-flex align-items-center mb-2">
+                                <img src="<%= member.image || 'https://randomuser.me/api/portraits/lego/1.jpg' %>"
+                                  width="40" height="40" class="rounded-circle" />
+                                <div class="ms-3">
+                                  <strong>
+                                    <%= member.name %>
+                                  </strong><br>
+                                  <small>Lat: <%= member.lat %>, Lon: <%= member.lon %></small><br>
+                                  <small>Ordered On: <%= order.orderUpdatedAt ? new Date(order.orderUpdatedAt).toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A' %></small> <br>
+                                  <small>Phone: <%= member.phone %> </small>
+                                  </div>
+                              </div>
+                              <ul class="list-group">
+                                <% member.order.items.forEach(item=> { %>
+                                  <li class="list-group-item d-flex justify-content-between">
+                                    <span>
+                                      <%= item.item %> × <%= item.quantity %>
+                                    </span>
+                                    <span>₹ <%= item.price %></span>
+                                  </li>
+                                  <% }) %>
+                              </ul>
+                              <div class="mt-2"><strong>Total Amount: ₹ <%= member.order.totalAmount %></strong></div>
+                            </div>
+                            <% }) %>
+                        </div>
+                        <% } %>
+
+                    </div>
+                    <% }) %>
+                      <% } %>
+
+
+            </div>
+          </div>
+        </div>
+      </main>
+
+
+
+
+      <%- include('partial/footer') %>
+        <script src="/js/my-orders.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

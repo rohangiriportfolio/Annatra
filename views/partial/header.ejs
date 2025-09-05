@@ -1,0 +1,35 @@
+<header class="header">
+    <button class="hamburger" aria-label="Open Sidebar" onclick="openSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="logo-container" aria-label="Annatra logo and brand">
+        <svg class="logo-svg" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+            <g transform="rotate(-65 50 50)">
+                <rect x="10" y="10" width="80" height="80" rx="20" ry="20" fill="#333333"></rect>
+            </g>
+            <text x="50%" y="70%" text-anchor="middle" font-family="Merienda, cursive" font-size="50"
+                fill="#ffe600">AT</text>
+        </svg>
+        <h1 class="annatra-logo">Annatra</h1>
+    </div>
+    <div class="profile-container">
+        <div class="support">
+            <img src="/image/robot.png" alt="">
+        </div>
+        <div class="profile">
+            <% if (typeof user !== 'undefined' && user) { %>
+                <img 
+                    class="profile-img" 
+                    src="<%= user.profileImage || '/images/default-avatar.png' %>" 
+                    alt="Profile Image">
+
+                <span class="profile-info">
+                    <span><%= user.name || 'Anonymous User' %></span>
+                    <span><%= user.location || 'Unknown Location' %></span>
+                </span>
+            <% } else { %>
+
+            <% } %>
+        </div>
+    </div>
+</header>

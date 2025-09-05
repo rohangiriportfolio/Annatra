@@ -1,0 +1,21 @@
+<div class="sidebar" id="sidebar">
+    <button class="close-btn" id="closeBtn" aria-label="Close Sidebar">&times;</button>
+    <nav>
+        <% if(user && user.role && user.role.toLowerCase() === 'vendor') { %>
+            <div tabindex="0" id="vendor-dashboard" class="link <%= user.activePage === 'vendor-dashboard' ? 'active-link' : '' %>"><i class="fas fa-utensils"></i><span>Vendor</span></div>
+            <div tabindex="0" id="dealer-products" class="link <%= user.activePage === 'dealer-products' ? 'active-link' : '' %>"><i class="fas fa-plus-square"></i><span>Create Order</span></div>
+            <div tabindex="0" id="find-group" class="link <%= user.activePage === 'view-group' ? 'active-link' : '' %>"><i class="fas fa-users"></i><span>Find Group</span></div>
+            <div tabindex="0" id="my-orders" class="link <%= user.activePage === 'my-orders' ? 'active-link' : '' %>"><i class="fas fa-list-check"></i><span>My Orders</span></div>
+            <div tabindex="0" id="logout" class="link"><i class="fas fa-right-from-bracket"></i><span>Logout</span></div>
+        <% } else if(user && user.role && user.role.toLowerCase() === 'dealer') { %>
+            <div tabindex="0" id="dealer-dashboard" class="link <%= user.activePage === 'dealer-dashboard' ? 'active-link' : '' %>"><i class="fas fa-shop"></i><span>Dealer</span></div>
+            <div tabindex="0" id="add-product" class="link <%= user.activePage === 'add-product' ? 'active-link' : '' %>"><i class="fas fa-plus"></i><span>Add Product</span></div>
+            <div tabindex="0" id="view-request" class="link <%= user.activePage === 'view-request' ? 'active-link' : '' %>"><i class="fas fa-list-check"></i><span>Orders</span></div>
+            <div tabindex="0" id="logout" class="link"><i class="fas fa-right-from-bracket"></i><span>Logout</span></div>
+        <% } else { %>
+            <div tabindex="0" id="viewer" class="link active-link"><i class="fa-solid fa-user-tag"></i><span>Viewer</span></div>
+            <div tabindex="0" id="login" class="link"><i class="fa-solid fa-right-to-bracket"></i><span>Login</span></div>
+            <div tabindex="0" id="register" class="link"><i class="fa-solid fa-user-plus"></i><span>Register</span></div>
+        <% } %>
+    </nav>
+</div>

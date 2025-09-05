@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dealer Requests</title>
+  <link rel="icon" type="image/png" href="/image/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Merienda&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/vendor-dashboard.css">
+</head>
+
+<body>
+  <%- include('partial/sidebar') %>
+    <%- include('partial/header') %>
+      <main class="container">
+        <div class="d-flex" style="width: 95%; justify-self: center;">
+          <div class="flex-grow-1 p-3" id="content">
+            <h4 class="mb-4">Order Requests</h4>
+
+            <% if (Object.keys(groups).length===0) { %>
+              <div class="alert alert-danger">
+                No Request History !!!
+              </div>
+              <% } else { %>
+                <div id="groupContainer">
+                  <% sortedOrderIds.forEach(orderId=> { %>
+                    <div class="group-section mb-3 border rounded p-3">
+                      <div class="d-flex order-group">
+                        <h6 class="mb-0">Order ID: <%= orderId %>
+                        </h6>
+                        <div class="d-flex dealer-order-details">
+                          <span class="span-group">
+                            <% if(dealerApprovalDates[orderId]) { %>
+                              <span  class="me-3">Approved On: <%= new Date(dealerApprovalDates[orderId]).toLocaleString('en-IN', {
+                                  hour: '2-digit' , minute:'2-digit', year:'numeric', month: 'short' , day:'numeric' })
+                                  %>
+                              </span>
+                              <% } %>
+                                <span class="me-3">
+                                  Members: <%= groups[orderId].length %>
+                                </span>
+                                <span class="me-3">
+                                  Total Price: ₹<%= groups[orderId].reduce((acc, m)=> acc + (m.amount || 0), 0) %>
+                                </span>
+                          </span>
+                          <span class="dealer-button-group">
+                            <button class="btn btn-sm btn-primary toggle-members" style="border-radius: 5px;"
+                              data-target="members-<%= orderId %>">
+                              <i class="fa-solid fa-eye"></i> Show Members
+                            </button>
+                            <% const allCompleted=groups[orderId].every(m=> m.order.orderCompleted); %>
+                              <% if (allCompleted) { %>
+                                <div class="approved-label btn btn-sm approve-btn disabled"
+                                  style="cursor: default; color: white; text-align: center; display: flex; align-items: center;">
+                                  Request Approved
+                                </div>
+                                <% } else { %>
+                                  <% if (user?.buyLimit <=groups[orderId].reduce((acc, m)=> acc + (m.amount || 0),
+                                    0)) {
+                                    %>
+                                    <button class="btn btn-sm btn-success approve-btn" data-orderid="<%= orderId %>"
+                                      data-dealerid="<%= user.dealerId || user._id %>">
+                                      Approve Request
+                                    </button>
+                                    <% } else { %>
+                                      <button class="btn btn-sm btn-success disabled-like"
+                                        onclick="alert('Ordering limit has not reached !!!'); return;">
+                                        Approve Request
+                                      </button>
+                                      <% } %>
+                                        <% } %>
+                          </span>
+                        </div>
+                      </div>
+                      <div id="members-<%= orderId %>" class="members-list mt-3" style="display: none;">
+                        <% groups[orderId].forEach(member=> { %>
+                          <div class="member-card bg-white rounded mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                              <img src="<%= member.image || 'https://randomuser.me/api/portraits/lego/1.jpg' %>"
+                                width="40" height="40" class="rounded-circle" />
+                              <div class="ms-3">
+                                <strong>
+                                  <%= member.name %>
+                                </strong><br>
+                                <small>Lat: <%= member.lat %>, Lon: <%= member.lon %></small><br>
+                                <small>Ordered On: <%= member.orderUpdatedAt ? new
+                                    Date(member.orderUpdatedAt).toLocaleString('en-IN', { hour: '2-digit' ,
+                                    minute:'2-digit', year:'numeric', month: 'short' , day:'numeric' }) : 'N/A' %>
+                                </small>
+                              </div>
+                            </div>
+                            <ul class="list-group">
+                              <% member.order.items.forEach(item=> { %>
+                                <li class="list-group-item d-flex justify-content-between">
+                                  <span>
+                                    <%= item.item %> × <%= item.quantity %>
+                                  </span>
+                                  <span>₹<%= item.price %></span>
+                                </li>
+                                <% }) %>
+                            </ul>
+                            <div class="mt-2">
+                              <strong>Total Amount: ₹<%= member.order.totalAmount %></strong>
+                            </div>
+                          </div>
+                          <% }) %>
+                      </div>
+                    </div>
+                    <% }) %>
+                </div>
+                <% } %>
+          </div>
+        </div>
+      </main>
+
+
+      <%- include('partial/footer') %>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/js/dealer-view-request.js"></script>
+</body>
+
+</html>
