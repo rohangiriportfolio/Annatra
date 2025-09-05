@@ -13,7 +13,7 @@ const cookieParser = require('cookie-parser');
 const upload = require('./middleWares/multer');
 const session = require('express-session');
 const mongoose = require('mongoose');
-
+require('dotenv').config();
 
 app.use(express.json());       // for parsing json
 app.use(express.urlencoded({ extended: true }));       // Converts URL-encoded form data (like key=value) into JavaScript objects, available on req.body
@@ -29,7 +29,7 @@ app.use(validateCookie("token"));      // for user login verification
 
 
 app.use(session({      // Not for user login verification, but only for storing success/error messages
-  secret: 'JaiGopal',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -85,7 +85,7 @@ app.post("/login", async (req, res) => {
         email: user.email,
         role: user.role,
       };
-      const token = jwtToken.sign(profile, "JaiShreeRam");
+      const token = jwtToken.sign(profile, process.env.TOKEN_SECRET);
       res.cookie("token", token);
       req.session.success = "Successfully logged in as Dealer !!!";
       return res.status(200).redirect('/');
