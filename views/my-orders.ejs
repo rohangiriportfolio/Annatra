@@ -44,8 +44,17 @@
                           <p class="mb-0"><i class="fa-solid fa-store"></i> Dealer: <%= order.dealer %>
                           </p>
                           <% if(order.orderCompleted && dealerApprovalDates[order.orderId]) { %>
-                            <span>Approved On: <%= new Date(dealerApprovalDates[order.orderId]).toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', year: 'numeric', month: 'short', day: 'numeric' }) %>
-                            </span> <br>
+                            <span>
+                              Approved On: <%= new Date(dealerApprovalDates[order.orderId]).toLocaleString('en-IN', { 
+                                timeZone: 'Asia/Kolkata',
+                                hour: '2-digit', 
+                                minute: '2-digit', 
+                                year: 'numeric', 
+                                month: 'short', 
+                                day: 'numeric' 
+                              }) %>
+                            </span>
+                             <br>
                             <% } %>
                             <span>Phone: <%= user.dealerPhone %></span>
                         </div>
@@ -71,7 +80,17 @@
                         <div class="member-card border rounded">
 
                           <!-- Added order updated date display for your own order below -->
-                          <small>Ordered On: <%= order.orderUpdatedAt ? new Date(order.orderUpdatedAt).toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A' %></small>
+                          <small>
+                            Ordered On: <%= order.orderUpdatedAt ? new Date(order.orderUpdatedAt).toLocaleString('en-IN', { 
+                              timeZone: 'Asia/Kolkata',
+                              hour: '2-digit', 
+                              minute: '2-digit', 
+                              year: 'numeric', 
+                              month: 'short', 
+                              day: 'numeric' 
+                            }) : 'N/A' %>
+                          </small>
+
                           <ul class="order-members list-group">
                             <% order.items.forEach(item=> { %>
                               <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -99,7 +118,20 @@
                                     <%= member.name %>
                                   </strong><br>
                                   <small>Lat: <%= member.lat %>, Lon: <%= member.lon %></small><br>
-                                  <small>Ordered On: <%= order.orderUpdatedAt ? new Date(order.orderUpdatedAt).toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A' %></small> <br>
+                                  <small>
+                                    Ordered On: <%= order.orderUpdatedAt 
+                                      ? new Date(order.orderUpdatedAt).toLocaleString('en-IN', { 
+                                          timeZone: 'Asia/Kolkata',
+                                          hour: '2-digit', 
+                                          minute: '2-digit', 
+                                          year: 'numeric', 
+                                          month: 'short', 
+                                          day: 'numeric' 
+                                        }) 
+                                      : 'N/A' 
+                                    %>
+                                  </small>
+                                   <br>
                                   <small>Phone: <%= member.phone %> </small>
                                   </div>
                               </div>
