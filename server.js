@@ -912,8 +912,10 @@ app.get('/add-product', async (req, res) => {
         : null,
       imageName: product.image?.fileName,
       id: product._id,
-      // dealerImage  // Add dealerImage here to each product if you want, or keep separately
     }));
+
+    // Prepare message if no products
+    const noProductsMessage = products.length === 0 ? "Add products to show here!" : null;
 
     res.render('add-product', {
       user: {
@@ -924,6 +926,7 @@ app.get('/add-product', async (req, res) => {
         activePage: 'add-product'
       },
       products,
+      noProductsMessage
     });
 
   } catch (error) {
