@@ -139,6 +139,7 @@ app.post("/register", upload.single('profileImage'), async (req, res) => {
       return res.status(200).redirect('/');
     }
   } catch (err) {
+    console.log(err);
     req.session.error = "Internal Server Error.";
     return res.status(500).redirect('/');
   }
