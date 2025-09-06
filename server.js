@@ -42,7 +42,7 @@ app.use(session({      // Not for user login verification, but only for storing 
 app.post("/login", async (req, res) => {
   try {
     const { email, password, role } = req.body;
-    console.log("Received data:", req.body);
+    // console.log("Received data:", req.body);
 
     let user;
     if (role === 'vendor') {
