@@ -22,7 +22,6 @@
           <div class="flex-grow-1" id="content">
             <div class="order-list">
 
-
               <% if (orders.length===0) { %>
                 <div class="alert alert-danger">
                   No Order History !!!
@@ -41,22 +40,19 @@
                                   <span class="badge bg-warning ms-2">Pending</span>
                                   <% } %>
                           </h6>
-                          <p class="mb-0"><i class="fa-solid fa-store"></i> Dealer: <%= order.dealer %>
+                          <p class="mb-0">
+                            <i class="fa-solid fa-store"></i> Dealer: <%= order.dealer %>
                           </p>
                           <% if(order.orderCompleted && dealerApprovalDates[order.orderId]) { %>
                             <span>
-                              Approved On: <%= new Date(dealerApprovalDates[order.orderId]).toLocaleString('en-IN', { 
-                                timeZone: 'Asia/Kolkata',
-                                hour: '2-digit', 
-                                minute: '2-digit', 
-                                year: 'numeric', 
-                                month: 'short', 
-                                day: 'numeric' 
-                              }) %>
+                              Approved On: <%= new Date(dealerApprovalDates[order.orderId]).toLocaleString('en-IN', {
+                                timeZone: 'Asia/Kolkata' , hour: '2-digit' , minute: '2-digit' , year: 'numeric' ,
+                                month: 'short' , day: 'numeric' }) %>
                             </span>
-                             <br>
+                            <br>
                             <% } %>
-                            <span>Phone: <%= user.dealerPhone %></span>
+                              <!-- Render dealer phone once per order group -->
+                              <span>Phone: <%= dealerPhoneMap[order.orderId] || 'N/A' %></span>
                         </div>
                         <div class="text-end">
                           <span>
@@ -79,18 +75,13 @@
                         <h6 class="fw-bold">My Ordered Items:</h6>
                         <div class="member-card border rounded">
 
-                          <!-- Added order updated date display for your own order below -->
+                          <!-- Format order updated date in IST -->
                           <small>
-                            Ordered On: <%= order.orderUpdatedAt ? new Date(order.orderUpdatedAt).toLocaleString('en-IN', { 
-                              timeZone: 'Asia/Kolkata',
-                              hour: '2-digit', 
-                              minute: '2-digit', 
-                              year: 'numeric', 
-                              month: 'short', 
-                              day: 'numeric' 
-                            }) : 'N/A' %>
+                            Ordered On: <%= order.orderUpdatedAt ? new
+                              Date(order.orderUpdatedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' ,
+                              hour: '2-digit' , minute: '2-digit' , year: 'numeric' , month: 'short' , day: 'numeric' })
+                              : 'N/A' %>
                           </small>
-
                           <ul class="order-members list-group">
                             <% order.items.forEach(item=> { %>
                               <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -102,7 +93,6 @@
                           <div class="mt-2"><strong>Total Amount: ₹ <%= order.total %></strong></div>
                         </div>
                       </div>
-
 
                       <% if (order.orderCompleted && otherMembersMap[order.orderId] &&
                         otherMembersMap[order.orderId].length> 0) { %>
@@ -119,21 +109,13 @@
                                   </strong><br>
                                   <small>Lat: <%= member.lat %>, Lon: <%= member.lon %></small><br>
                                   <small>
-                                    Ordered On: <%= member.orderUpdatedAt 
-                                      ? new Date(member.orderUpdatedAt).toLocaleString('en-IN', { 
-                                          timeZone: 'Asia/Kolkata',
-                                          hour: '2-digit', 
-                                          minute: '2-digit', 
-                                          year: 'numeric', 
-                                          month: 'short', 
-                                          day: 'numeric' 
-                                        }) 
-                                      : 'N/A' 
-                                    %>
-                                  </small>
-                                   <br>
+                                    Ordered On: <%= member.orderUpdatedAt ? new
+                                      Date(member.orderUpdatedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' ,
+                                      hour: '2-digit' , minute: '2-digit' , year: 'numeric' , month: 'short' ,
+                                      day: 'numeric' }) : 'N/A' %>
+                                  </small> <br>
                                   <small>Phone: <%= member.phone %> </small>
-                                  </div>
+                                </div>
                               </div>
                               <ul class="list-group">
                                 <% member.order.items.forEach(item=> { %>
@@ -150,19 +132,14 @@
                             <% }) %>
                         </div>
                         <% } %>
-
                     </div>
                     <% }) %>
                       <% } %>
-
 
             </div>
           </div>
         </div>
       </main>
-
-
-
 
       <%- include('partial/footer') %>
         <script src="/js/my-orders.js"></script>
