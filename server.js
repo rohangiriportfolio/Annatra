@@ -742,6 +742,7 @@ app.get('/my-orders', async (req, res) => {
       imageBase64 = `data:${user.profileImage.contentType};base64,${user.profileImage.data.toString('base64')}`;
     }
 
+    // Group orders by orderId
     const groupedOrders = user.orders.reduce((acc, order) => {
       const { orderId, dealer, items = [], totalAmount = 0, orderCompleted, orderUpdatedAt } = order;
       if (!acc[orderId]) {
@@ -769,23 +770,33 @@ app.get('/my-orders', async (req, res) => {
 
     const approvedOrders = ordersArray.filter(o => o.orderCompleted);
 
-    // Fetch the dealer once for efficiency
-    // If multiple dealers involved, consider querying accordingly
-    const dealerDoc = await dealerdb.findOne({ _id: user.currentDealer });
-
-    // Extract dealer phone number
-    const dealerPhone = dealerDoc?.phone || null;
+    // Build a map: orderId -> dealer phone (actual dealer for each order)
+    const dealerPhoneMap = {};
+    for (const order of ordersArray) {
+      const dealerId = order.dealer;
+      if (dealerId) {
+        const dealerDoc = await dealerdb.findOne({ _id: dealerId }, { phone: 1 });
+        dealerPhoneMap[order.orderId] = dealerDoc?.phone || null;
+      } else {
+        dealerPhoneMap[order.orderId] = null;
+      }
+    }
 
     // Prepare a map for dealer approval dates by orderId
     const dealerApprovalDates = {};
-
     for (const approvedOrder of approvedOrders) {
-      if (dealerDoc) {
-        const vendorOrder = dealerDoc.vendorOrders.find(vo =>
-          vo.orderId === approvedOrder.orderId &&
-          vo.vendorId?.toString() === user._id.toString()
-        );
-        dealerApprovalDates[approvedOrder.orderId] = vendorOrder?.orderApprovedAt || null;
+      const dealerId = approvedOrder.dealer;
+      if (dealerId) {
+        const dealerDoc = await dealerdb.findOne({ _id: dealerId }, { vendorOrders: 1 });
+        if (dealerDoc) {
+          const vendorOrder = dealerDoc.vendorOrders.find(vo =>
+            vo.orderId === approvedOrder.orderId &&
+            vo.vendorId?.toString() === user._id.toString()
+          );
+          dealerApprovalDates[approvedOrder.orderId] = vendorOrder?.orderApprovedAt || null;
+        } else {
+          dealerApprovalDates[approvedOrder.orderId] = null;
+        }
       } else {
         dealerApprovalDates[approvedOrder.orderId] = null;
       }
@@ -793,7 +804,6 @@ app.get('/my-orders', async (req, res) => {
 
     // Map: orderId -> array of other members (approved) with phone number
     const otherMembersMap = {};
-
     for (const approvedOrder of approvedOrders) {
       const members = await userdb.find({
         email: { $ne: user.email },
@@ -804,7 +814,7 @@ app.get('/my-orders', async (req, res) => {
         name: 1,
         location: 1,
         profileImage: 1,
-        phone: 1,              // Include phone field here
+        phone: 1,
         orders: { $elemMatch: { orderId: approvedOrder.orderId, orderCompleted: true } }
       });
 
@@ -813,11 +823,11 @@ app.get('/my-orders', async (req, res) => {
           name: member.name,
           lat: member.location?.lat || 'N/A',
           lon: member.location?.lon || 'N/A',
-          phone: member.phone || '',                          // Add phone here
+          phone: member.phone || '',
           image: member.profileImage?.data
             ? `data:${member.profileImage.contentType};base64,${member.profileImage.data.toString('base64')}`
             : null,
-          order: member.orders[0], // filtered by orderId
+          order: member.orders[0],
           orderUpdatedAt: member.orders[0]?.orderUpdatedAt || null
         }))
         .sort((a, b) => {
@@ -833,12 +843,12 @@ app.get('/my-orders', async (req, res) => {
         location: `${user.location?.lat || ''}, ${user.location?.lon || ''}`,
         profileImage: imageBase64,
         role: user.role,
-        activePage: 'my-orders',
-        dealerPhone // Send dealer phone number here
+        activePage: 'my-orders'
       },
       orders: ordersArray,
+      dealerPhoneMap,
       otherMembersMap,
-      dealerApprovalDates, // send to frontend to show single approval per group
+      dealerApprovalDates,
       noOrders
     });
 
@@ -847,7 +857,6 @@ app.get('/my-orders', async (req, res) => {
     res.status(500).send("Failed to load profile");
   }
 });
-
 
 
 app.get('/dealer-dashboard', async (req, res) => {
