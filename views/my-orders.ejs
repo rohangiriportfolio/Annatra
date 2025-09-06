@@ -119,8 +119,8 @@
                                   </strong><br>
                                   <small>Lat: <%= member.lat %>, Lon: <%= member.lon %></small><br>
                                   <small>
-                                    Ordered On: <%= order.orderUpdatedAt 
-                                      ? new Date(order.orderUpdatedAt).toLocaleString('en-IN', { 
+                                    Ordered On: <%= member.orderUpdatedAt 
+                                      ? new Date(member.orderUpdatedAt).toLocaleString('en-IN', { 
                                           timeZone: 'Asia/Kolkata',
                                           hour: '2-digit', 
                                           minute: '2-digit', 
