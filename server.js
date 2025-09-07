@@ -1133,8 +1133,6 @@ app.get("/logout", (req, res) => {
   res.status(200).redirect('/');
 });
 
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${PORT}`);
-  });
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
