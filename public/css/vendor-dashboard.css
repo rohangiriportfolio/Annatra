@@ -355,9 +355,99 @@ nav {
   /* position: relative; */
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-around;
   align-items: center;
-  width: 10vw;
+  width: 12vw;
+}
+
+#location {
+  /* position: fixed;
+  top: 85%;
+  left: 95%; */
+  z-index: 1000;
+  height: 35px;
+  width: 35px;
+}
+
+#location img {
+  height: 100%;
+  width: 100%;
+}
+
+#location img:hover {
+  cursor: pointer;
+  filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.286));
+}
+
+
+#popup {
+  display: none;
+  position: fixed;
+  top: 10%;
+  left: 76%;
+  background: #333;
+  color: var(--yellow);
+  padding: 1.5rem 1.5rem;
+  border-radius: 10px;
+  filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.547));
+  width: 220px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+@media (max-width: 800px) {
+
+  #location {
+    left: 80%;
+    top: 75%;
+  }
+
+  #location img {
+    height: 80%;
+    width: 80%;
+  }
+
+  #popup {
+    top: 10%;
+    left: 9%;
+  }
+}
+
+#popup h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+#popup button {
+  background: var(--yellow);
+  color: var(--dark-gray);
+  border: none;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  /* margin: 0 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#auto-location {
+  margin-right: 6px;
+}
+
+#manual-location {
+  margin-left: 6px;
+}
+
+
+#popup button:hover {
+  background: #e6d800;
+}
+
+#popup-close {
+  position: absolute;
+  top: 3px;
+  left: 7px;
+  cursor: pointer;
 }
 
 .profile-info {
@@ -400,11 +490,12 @@ nav {
   }
 
   .logo-container {
-    margin-left: -25vw;
+    margin-left: 5vw;
   }
 
   .profile-container {
     margin-right: 3vw;
+    width: 33vw;
   }
 }
 
@@ -1890,98 +1981,6 @@ input[type="password"]::-webkit-password-reveal-button {
   }
 }
 
-#location {
-  position: fixed;
-  top: 85%;
-  left: 95%;
-  z-index: 1000;
-  height: 45px;
-  width: 45px;
-}
-
-#location img {
-  height: 100%;
-  width: 100%;
-}
-
-#location img:hover {
-  cursor: pointer;
-  filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.286));
-}
-
-
-
-/* Popup container */
-#popup {
-  display: none;
-  position: fixed;
-  top: 65%;
-  left: 78%;
-  background: var(--dark-gray);
-  color: var(--yellow);
-  padding: 1.5rem 1.5rem;
-  border-radius: 10px;
-  filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.547));
-  width: 220px;
-  text-align: center;
-  font-family: Arial, sans-serif;
-}
-
-@media (max-width: 800px) {
-
-  #location {
-    left: 80%;
-    top: 75%;
-  }
-
-  #location img {
-    height: 80%;
-    width: 80%;
-  }
-
-  #popup {
-    top: 50%;
-    left: 9%;
-  }
-}
-
-#popup h2 {
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-}
-
-#popup button {
-  background: var(--yellow);
-  color: var(--dark-gray);
-  border: none;
-  padding: 0.5rem 0.75rem;
-  font-size: 1rem;
-  /* margin: 0 10px; */
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-#auto-location {
-  margin-right: 6px;
-}
-
-#manual-location {
-  margin-left: 6px;
-}
-
-
-#popup button:hover {
-  background: #e6d800;
-}
-
-#popup-close {
-  position: absolute;
-  top: 3px;
-  left: 7px;
-  cursor: pointer;
-}
-
 /* Popup container */
 
 #range {
@@ -2006,7 +2005,7 @@ input[type="password"]::-webkit-password-reveal-button {
 #range-popup {
   display: none;
   position: fixed;
-  top: 65%;
+  top: 70%;
   left: 78%;
   background: var(--dark-gray);
   color: var(--yellow);
@@ -2020,8 +2019,8 @@ input[type="password"]::-webkit-password-reveal-button {
 
 @media (max-width: 800px) {
   #range {
-    left: 80%;
-    top: 65%;
+    left: 77%;
+    top: 70%;
   }
 
   #range img {
