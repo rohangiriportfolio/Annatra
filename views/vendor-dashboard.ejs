@@ -11,224 +11,220 @@
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/vendor-dashboard.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script> window.chtlConfig = { chatbotId: "8444632421" } </script>
+    <script async data-id="8444632421" id="chtl-script" type="text/javascript"
+        src="https://chatling.ai/js/embed.js"></script>
 </head>
 
 <body>
-    <%if (user) { %>
-        <%- include('partial/location') %>
+
+    <%if (user && user.role==='dealer' ) { %>
+        <%- include('partial/range') %>
             <% } %>
-                <%if (user && user.role==='dealer' ) { %>
-                    <%- include('partial/range') %>
-                        <% } %>
-                            <%- include('partial/sidebar') %>
-                                <%- include('partial/header') %>
-                                    <!-- <section style=""> -->
-                                    <div class="overlay"></div>
-                                    <div class="login-wrapper wrapper">
-                                        <span class="close"><i class="fa-solid fa-xmark"></i></span>
-                                        <div class="login-card shadow-lg">
-                                            <div class="text-center mb-4">
-                                                <i class="fa-solid fa-right-to-bracket"></i>
-                                                <h3 class="mt-2">Welcome Back!</h3>
-                                                <p style="color: var(--yellow)">Login to continue</p>
-                                            </div>
-                                            <form action="/login" method="post">
-                                                <!-- Email -->
-                                                <div class="login-field">
-                                                    <label for="email" class="login-label"><i
-                                                            class="fa-solid fa-envelope"></i> Email</label>
-                                                    <input id="email" type="email" name="email" class="form-control"
-                                                        placeholder="Enter your email" required />
-                                                </div>
+                <%- include('partial/sidebar') %>
+                    <%- include('partial/header') %>
+                        <!-- <section style=""> -->
+                        <div class="overlay"></div>
+                        <div class="login-wrapper wrapper">
+                            <span class="close"><i class="fa-solid fa-xmark"></i></span>
+                            <div class="login-card shadow-lg">
+                                <div class="text-center mb-4">
+                                    <i class="fa-solid fa-right-to-bracket"></i>
+                                    <h3 class="mt-2">Welcome Back!</h3>
+                                    <p style="color: var(--yellow)">Login to continue</p>
+                                </div>
+                                <form action="/login" method="post">
+                                    <!-- Email -->
+                                    <div class="login-field">
+                                        <label for="email" class="login-label"><i class="fa-solid fa-envelope"></i>
+                                            Email</label>
+                                        <input id="email" type="email" name="email" class="form-control"
+                                            placeholder="Enter your email" required />
+                                    </div>
 
-                                                <!-- Password -->
-                                                <div class="login-field">
-                                                    <label for="password" class="login-label"><i
-                                                            class="fa-solid fa-lock"></i> Password</label>
-                                                    <input id="password" type="password" name="password"
-                                                        class="form-control" placeholder="Enter your password"
-                                                        required />
-                                                </div>
+                                    <!-- Password -->
+                                    <div class="login-field">
+                                        <label for="password" class="login-label"><i class="fa-solid fa-lock"></i>
+                                            Password</label>
+                                        <input id="password" type="password" name="password" class="form-control"
+                                            placeholder="Enter your password" required />
+                                    </div>
 
-                                                <!-- Role Selection -->
-                                                <div class="login-field">
-                                                    <label for="role" class="login-label"><i
-                                                            class="fa-solid fa-user-tag"></i> Role</label>
-                                                    <select id="role" name="role" class="form-select" required>
-                                                        <option value="" disabled selected>Select role</option>
-                                                        <option value="dealer">Dealer</option>
-                                                        <option value="vendor">Vendor</option>
-                                                    </select>
-                                                </div>
+                                    <!-- Role Selection -->
+                                    <div class="login-field">
+                                        <label for="role" class="login-label"><i class="fa-solid fa-user-tag"></i>
+                                            Role</label>
+                                        <select id="role" name="role" class="form-select" required>
+                                            <option value="" disabled selected>Select role</option>
+                                            <option value="dealer">Dealer</option>
+                                            <option value="vendor">Vendor</option>
+                                        </select>
+                                    </div>
 
-                                                <!-- Login Button -->
-                                                <button type="submit" class="btn btn-success w-100 mt-2">Login</button>
+                                    <!-- Login Button -->
+                                    <button type="submit" class="btn btn-success w-100 mt-2">Login</button>
 
-                                                <!-- Register Link -->
-                                                <p class="text-center mt-3 try">
-                                                    Don't have an account?
-                                                    <span id="tryRegister">Register</span>
-                                                </p>
-                                            </form>
+                                    <!-- Register Link -->
+                                    <p class="text-center mt-3 try">
+                                        Don't have an account?
+                                        <span id="tryRegister">Register</span>
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- </section> -->
+                        <div class="register-wrapper wrapper">
+                            <span class="close"><i class="fa-solid fa-xmark"></i></span>
+                            <div class="shadow-sm register-card">
+                                <div class="text-center mb-2">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                    <h5 class="mt-1">Create Your Account</h5>
+                                </div>
+                                <form action="/register" method="post" enctype="multipart/form-data">
+                                    <!-- Full Name -->
+                                    <div class="register-field">
+                                        <label class="register-label"><i class="fa-solid fa-user"></i> Full
+                                            Name</label>
+                                        <input type="text" class="form-control" name="name" placeholder="Your name"
+                                            required>
+                                    </div>
+
+                                    <!-- Email -->
+                                    <div class="register-field">
+                                        <label class="register-label"><i class="fa-solid fa-envelope"></i>
+                                            Email</label>
+                                        <input type="email" class="form-control" name="email" placeholder="Your email"
+                                            required>
+                                    </div>
+
+                                    <!-- Password -->
+                                    <div class="register-field">
+                                        <label class="register-label"><i class="fa-solid fa-lock"></i>
+                                            Password</label>
+                                        <input type="password" class="form-control" name="password"
+                                            placeholder="Password" required>
+                                    </div>
+
+                                    <!-- Role -->
+                                    <div class="register-field d-flex flex-direction-row ">
+                                        <div style="width: 55%; padding-right: 7px;">
+                                            <label class="register-label"><i class="fa-solid fa-phone"></i>
+                                                Phone</label>
+                                            <input type="text" class="form-control" name="phone" placeholder="Phone"
+                                                required>
+                                        </div>
+                                        <div style="width: 45%; padding-left: 7px;">
+                                            <label class="register-label"><i class="fa-solid fa-user-tag"></i>
+                                                Role</label>
+                                            <select class="form-select" name="role" required>
+                                                <option value="" disabled selected>Role</option>
+                                                <option value="vendor">Vendor</option>
+                                                <option value="dealer">Dealer</option>
+                                            </select>
+
                                         </div>
                                     </div>
 
-                                    <!-- </section> -->
-                                    <div class="register-wrapper wrapper">
-                                        <span class="close"><i class="fa-solid fa-xmark"></i></span>
-                                        <div class="shadow-sm register-card">
-                                            <div class="text-center mb-2">
-                                                <i class="fa-solid fa-user-plus"></i>
-                                                <h5 class="mt-1">Create Your Account</h5>
-                                            </div>
-                                            <form action="/register" method="post" enctype="multipart/form-data">
-                                                <!-- Full Name -->
-                                                <div class="register-field">
-                                                    <label class="register-label"><i class="fa-solid fa-user"></i> Full
-                                                        Name</label>
-                                                    <input type="text" class="form-control" name="name"
-                                                        placeholder="Your name" required>
-                                                </div>
-
-                                                <!-- Email -->
-                                                <div class="register-field">
-                                                    <label class="register-label"><i class="fa-solid fa-envelope"></i>
-                                                        Email</label>
-                                                    <input type="email" class="form-control" name="email"
-                                                        placeholder="Your email" required>
-                                                </div>
-
-                                                <!-- Password -->
-                                                <div class="register-field">
-                                                    <label class="register-label"><i class="fa-solid fa-lock"></i>
-                                                        Password</label>
-                                                    <input type="password" class="form-control" name="password"
-                                                        placeholder="Password" required>
-                                                </div>
-
-                                                <!-- Role -->
-                                                <div class="register-field d-flex flex-direction-row ">
-                                                    <div style="width: 55%; padding-right: 7px;">
-                                                        <label class="register-label"><i class="fa-solid fa-phone"></i>
-                                                            Phone</label>
-                                                        <input type="text" class="form-control" name="phone"
-                                                            placeholder="Phone" required>
-                                                    </div>
-                                                    <div style="width: 45%; padding-left: 7px;">
-                                                        <label class="register-label"><i class="fa-solid fa-user-tag"></i>
-                                                            Role</label>
-                                                        <select class="form-select" name="role" required>
-                                                            <option value="" disabled selected>Role</option>
-                                                            <option value="vendor">Vendor</option>
-                                                            <option value="dealer">Dealer</option>
-                                                        </select>
-
-                                                    </div>
-                                                </div>
-
-                                                <!-- Profile Image -->
-                                                <div class="register-field">
-                                                    <label class="register-label"><i class="fa-solid fa-image"></i>
-                                                        Profile Picture</label>
-                                                    <input type="file" class="form-control" name="profileImage"
-                                                        accept="image/*" required>
-                                                </div>
-
-                                                <!-- Submit -->
-                                                <button type="submit"
-                                                    class="btn btn-success w-100 mt-2">Register</button>
-
-                                                <p class="text-center mt-2 try">
-                                                    Already have an account?
-                                                    <span id="tryLogin">Login</span>
-                                                </p>
-                                            </form>
-                                        </div>
+                                    <!-- Profile Image -->
+                                    <div class="register-field">
+                                        <label class="register-label"><i class="fa-solid fa-image"></i>
+                                            Profile Picture</label>
+                                        <input type="file" class="form-control" name="profileImage" accept="image/*"
+                                            required>
                                     </div>
 
-                                    <main class="container">
-                                        <% if (success) { %>
-                                            <div class="alert alert-success m-4">
-                                                <%= success %>
-                                            </div>
-                                            <% } else if(error) { %>
-                                                <div class="alert alert-danger m-4">
-                                                    <%= error %>
-                                                </div>
-                                                <% } %>
-                                                    <div class="image-container"
-                                                        aria-label="Three images arranged in three directions">
-                                                        <div>
-                                                            <span class="first">
-                                                                <img src="/image/paperBag.png" alt="Delivering"
-                                                                    style="width: 220px; z-index: 5;" />
-                                                            </span>
-                                                            <span class="second">
-                                                                <div class="image-description"
-                                                                    aria-label="Website description">
-                                                                    <p>
-                                                                        <span
-                                                                            style="display: flex; flex-direction: column; justify-content: center;">
-                                                                            <span style="font-size: 2.5rem;">
-                                                                                Connect Together For More Profits
-                                                                            </span>
-                                                                            <span style="color: rgb(68, 68, 68);">
-                                                                                Welcome to Annatra, the smart
-                                                                                marketplace
-                                                                                connecting local vendors for group
-                                                                                ordering to maximize savings and
-                                                                                efficiency.
-                                                                            </span>
-                                                                        </span>
-                                                                    </p>
-                                                                </div>
-                                                                <img src="/image/group.png" alt="Grouping"
-                                                                    style="width: 350px;" />
-                                                            </span>
-                                                            <span class="third">
-                                                                <img src="/image/cart2.png" alt="Costing" />
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                    </main>
-                                    <div class="curve" style="width: auto;">
+                                    <!-- Submit -->
+                                    <button type="submit" class="btn btn-success w-100 mt-2">Register</button>
 
-                                        <svg viewBox="20 0 80 40" preserveAspectRatio="none">
-                                            <path d="M 20 39 C 50 0 70 0 100 39 L 100 100 L 20 100 Z"
-                                                fill="var(--yellow)" />
-                                        </svg>
+                                    <p class="text-center mt-2 try">
+                                        Already have an account?
+                                        <span id="tryLogin">Login</span>
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+
+                        <main class="container">
+                            <% if (success) { %>
+                                <div class="alert alert-success m-4">
+                                    <%= success %>
+                                </div>
+                                <% } else if(error) { %>
+                                    <div class="alert alert-danger m-4">
+                                        <%= error %>
                                     </div>
-                                    <!-- Features Section -->
-                                    <section class="features-section" aria-labelledby="featuresTitle">
-                                        <div class="features-container">
-                                            <h2 id="featuresTitle" class="features-title">Why Choose Us?</h2>
-                                            <div class="features-row">
-                                                <article tabindex="0" class="feature-col" aria-label="Group Orders">
-                                                    <i class="fa-solid fa-users feature-icon feature-icon-success"
-                                                        aria-hidden="true"></i>
-                                                    <h3>Group Orders</h3>
-                                                    <p>Collaborate with local vendors to pool orders &amp; save more.
-                                                    </p>
-                                                </article>
-                                                <article tabindex="0" class="feature-col" aria-label="Bulk Discounts">
-                                                    <i class="fa-solid fa-wallet feature-icon feature-icon-warning"
-                                                        aria-hidden="true"></i>
-                                                    <h3>Bulk Discounts</h3>
-                                                    <p>Enjoy affordable prices by leveraging bulk purchase power.</p>
-                                                </article>
-                                                <article tabindex="0" class="feature-col" aria-label="Verified Dealers">
-                                                    <i class="fa-solid fa-handshake feature-icon feature-icon-primary"
-                                                        aria-hidden="true"></i>
-                                                    <h3>Verified Dealers</h3>
-                                                    <p>Access trusted and verified raw material suppliers near you.</p>
-                                                </article>
+                                    <% } %>
+                                        <div class="image-container"
+                                            aria-label="Three images arranged in three directions">
+                                            <div>
+                                                <span class="first">
+                                                    <img src="/image/paperBag.png" alt="Delivering"
+                                                        style="width: 220px; z-index: 5;" />
+                                                </span>
+                                                <span class="second">
+                                                    <div class="image-description" aria-label="Website description">
+                                                        <p>
+                                                            <span
+                                                                style="display: flex; flex-direction: column; justify-content: center;">
+                                                                <span style="font-size: 2.5rem;">
+                                                                    Connect Together For More Profits
+                                                                </span>
+                                                                <span style="color: rgb(68, 68, 68);">
+                                                                    Welcome to Annatra, the smart
+                                                                    marketplace
+                                                                    connecting local vendors for group
+                                                                    ordering to maximize savings and
+                                                                    efficiency.
+                                                                </span>
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                    <img src="/image/group.png" alt="Grouping" style="width: 350px;" />
+                                                </span>
+                                                <span class="third">
+                                                    <img src="/image/cart2.png" alt="Costing" />
+                                                </span>
                                             </div>
                                         </div>
-                                    </section>
+                        </main>
+                        <div class="curve" style="width: auto;">
 
-                                    <%- include('partial/footer') %>
+                            <svg viewBox="20 0 80 40" preserveAspectRatio="none">
+                                <path d="M 20 39 C 50 0 70 0 100 39 L 100 100 L 20 100 Z" fill="var(--yellow)" />
+                            </svg>
+                        </div>
+                        <!-- Features Section -->
+                        <section class="features-section" aria-labelledby="featuresTitle">
+                            <div class="features-container">
+                                <h2 id="featuresTitle" class="features-title">Why Choose Us?</h2>
+                                <div class="features-row">
+                                    <article tabindex="0" class="feature-col" aria-label="Group Orders">
+                                        <i class="fa-solid fa-users feature-icon feature-icon-success"
+                                            aria-hidden="true"></i>
+                                        <h3>Group Orders</h3>
+                                        <p>Collaborate with local vendors to pool orders &amp; save more.
+                                        </p>
+                                    </article>
+                                    <article tabindex="0" class="feature-col" aria-label="Bulk Discounts">
+                                        <i class="fa-solid fa-wallet feature-icon feature-icon-warning"
+                                            aria-hidden="true"></i>
+                                        <h3>Bulk Discounts</h3>
+                                        <p>Enjoy affordable prices by leveraging bulk purchase power.</p>
+                                    </article>
+                                    <article tabindex="0" class="feature-col" aria-label="Verified Dealers">
+                                        <i class="fa-solid fa-handshake feature-icon feature-icon-primary"
+                                            aria-hidden="true"></i>
+                                        <h3>Verified Dealers</h3>
+                                        <p>Access trusted and verified raw material suppliers near you.</p>
+                                    </article>
+                                </div>
+                            </div>
+                        </section>
 
-                                        <script src="/js/vendor-dashboard.js"></script>
+                        <%- include('partial/footer') %>
+
+                            <script src="/js/vendor-dashboard.js"></script>
 </body>
 
 </html>
