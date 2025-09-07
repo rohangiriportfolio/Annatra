@@ -1,3 +1,4 @@
+require('dotenv').config();
 require("./db/conn.js");
 const express = require('express');
 const app = express();
@@ -13,7 +14,6 @@ const cookieParser = require('cookie-parser');
 const upload = require('./middleWares/multer');
 const session = require('express-session');
 const mongoose = require('mongoose');
-require('dotenv').config();
 
 app.use(express.json());       // for parsing json
 app.use(express.urlencoded({ extended: true }));       // Converts URL-encoded form data (like key=value) into JavaScript objects, available on req.body
