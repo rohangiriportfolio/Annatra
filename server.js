@@ -33,7 +33,7 @@ app.use(session({      // Not for user login verification, but only for storing 
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: true,
+    secure: false,
   },
   name: 'message',
 }));
