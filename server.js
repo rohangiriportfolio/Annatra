@@ -91,7 +91,7 @@ app.post("/login", async (req, res) => {
       return res.status(200).redirect('/');
     }
   } catch (error) {
-    // console.error("Login error:", error);
+    console.error("Login error:", error);
     // return res.status(500).json({ success: false, message: "Internal Server Error" });
     req.session.error = "Internal Server Error.";
     return res.status(500).redirect('/');
@@ -139,7 +139,7 @@ app.post("/register", upload.single('profileImage'), async (req, res) => {
       return res.status(200).redirect('/');
     }
   } catch (err) {
-    console.log(err);
+    console.log("Register error:", err);
     req.session.error = "Internal Server Error.";
     return res.status(500).redirect('/');
   }
