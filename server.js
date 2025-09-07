@@ -1,5 +1,5 @@
 require('dotenv').config();
-require("./db/conn.js");
+const connectDB = require("./db/conn");
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -1133,6 +1133,8 @@ app.get("/logout", (req, res) => {
   res.status(200).redirect('/');
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running at http://localhost:${PORT}`);
+  });
 });
