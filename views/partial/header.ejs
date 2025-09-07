@@ -13,23 +13,25 @@
         <h1 class="annatra-logo">Annatra</h1>
     </div>
     <div class="profile-container">
-        <div class="support">
-            <img src="/image/robot.png" alt="">
-        </div>
-        <div class="profile">
-            <% if (typeof user !== 'undefined' && user) { %>
-                <img 
-                    class="profile-img" 
-                    src="<%= user.profileImage || '/images/default-avatar.png' %>" 
-                    alt="Profile Image">
+        <%if (user) { %>
+            <%- include('../partial/location') %>
+                <% } %>
+                    <div class="profile">
+                        <% if (typeof user !=='undefined' && user) { %>
+                            <img class="profile-img" src="<%= user.profileImage || '/images/default-avatar.png' %>"
+                                alt="Profile Image">
 
-                <span class="profile-info">
-                    <span><%= user.name || 'Anonymous User' %></span>
-                    <span><%= user.location || 'Unknown Location' %></span>
-                </span>
-            <% } else { %>
+                            <span class="profile-info">
+                                <span>
+                                    <%= user.name || 'Anonymous User' %>
+                                </span>
+                                <span>
+                                    <%= user.location || 'Unknown Location' %>
+                                </span>
+                            </span>
+                            <% } else { %>
 
-            <% } %>
-        </div>
+                                <% } %>
+                    </div>
     </div>
 </header>
