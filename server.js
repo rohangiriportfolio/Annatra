@@ -182,7 +182,7 @@ app.get('/', async (req, res) => {
           role: user.role,
           activePage: user.role == 'vendor' ? 'vendor-dashboard' : 'dealer-dashboard',
         }
-        : null, success: successMsg, error: errorMsg,
+        : null, success: successMsg, error: errorMsg, CHATBOT_API: process.env.CHATBOT_API,
     });
   } catch (error) {
     console.error(error);
