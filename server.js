@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));       // Converts URL-encoded f
 app.set('view engine', 'ejs');      // for rendering ejs
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(cookieParser());       // for user login verification
 app.use(validateCookie("token"));      // for user login verification
@@ -33,7 +33,7 @@ app.use(session({      // Not for user login verification, but only for storing 
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false,
+    secure: true,
   },
   name: 'message',
 }));
