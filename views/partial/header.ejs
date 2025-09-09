@@ -13,7 +13,7 @@
         <h1 class="annatra-logo">Annatra</h1>
     </div>
     <div class="profile-container">
-        <%if (user) { %>
+        <%if (user && ((user.activePage=='vendor-dashboard')||(user.activePage=='dealer-dashboard') { %>
             <%- include('../partial/location') %>
                 <% } %>
                     <div class="profile">
