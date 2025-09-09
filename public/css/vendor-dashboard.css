@@ -355,9 +355,10 @@ nav {
   /* position: relative; */
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-end;
   align-items: center;
   width: 12vw;
+  gap: 2vw;
 }
 
 #location {
@@ -495,6 +496,7 @@ nav {
 
   .profile-container {
     margin-right: 3vw;
+    gap: 3vw;
     width: 33vw;
   }
 }
@@ -2019,7 +2021,7 @@ input[type="password"]::-webkit-password-reveal-button {
 
 @media (max-width: 800px) {
   #range {
-    left: 77%;
+    left: 78%;
     top: 70%;
   }
 
@@ -2029,8 +2031,8 @@ input[type="password"]::-webkit-password-reveal-button {
   }
 
   #range-popup {
-    top: 50%;
-    left: 9%;
+    top: 35%;
+    left: 8%;
   }
 }
 
